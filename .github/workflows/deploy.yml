@@ -34,6 +34,6 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add artifacts/model.pkl artifact/encoder.pkl
+          git add artifacts/model.pkl artifacts/encoder.pkl
           git commit -m "🔁 Auto retrain model"
           git push
