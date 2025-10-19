@@ -7,7 +7,7 @@ on:
       - "car_data.csv"
       - "train.py"
       - "app.py"
-      - "requirements.txt"
+      - "req.txt"
       - ".github/workflows/deploy.yml"
 
 jobs:
@@ -25,7 +25,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install --no-cache-dir -r requirements.txt
+          pip install --no-cache-dir -r req.txt
 
       - name: Retrain model
         run: python train.py
