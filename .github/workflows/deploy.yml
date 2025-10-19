@@ -1,0 +1,39 @@
+name: Retrain and Deploy Model
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - "car_data.csv"
+      - "train.py"
+      - "app.py"
+      - "requirements.txt"
+      - ".github/workflows/deploy.yml"
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          pip install --no-cache-dir -r requirements.txt
+
+      - name: Retrain model
+        run: python train.py
+
+      - name: Commit updated model
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add model.pkl label_encoders.pkl
+          git commit -m "🔁 Auto retrain model"
+          git push
