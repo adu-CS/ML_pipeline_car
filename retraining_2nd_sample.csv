@@ -1,0 +1,11 @@
+﻿car_name,yr_mfr,kms_run,fuel_type,city,total_owners,body_type,transmission,make,model,original_price,sale_price
+Maruti Alto,2015,45000,Petrol,Chennai,1,Hatchback,Manual,Maruti,Base,300000,215000
+Hyundai i20,2018,30000,Diesel,Bangalore,1,Hatchback,Manual,Hyundai,Premium,550000,410000
+Honda City,2017,60000,Petrol,Delhi,2,Sedan,Automatic,Honda,Deluxe,800000,575000
+Toyota Innova,2016,75000,Diesel,Mumbai,2,MPV,Manual,Toyota,Sport,1200000,890000
+Mahindra XUV,2019,40000,Diesel,Hyderabad,1,SUV,Automatic,Mahindra,Premium,1500000,1150000
+Maruti Swift,2018,35000,Petrol,Chennai,1,Hatchback,Manual,Maruti,Deluxe,600000,450000
+Hyundai Verna,2017,50000,Diesel,Bangalore,2,Sedan,Automatic,Hyundai,Sport,850000,610000
+Honda Amaze,2019,25000,Petrol,Delhi,1,Sedan,Manual,Honda,Base,650000,480000
+Toyota Fortuner,2015,90000,Diesel,Mumbai,3,SUV,Automatic,Toyota,Premium,2200000,1650000
+Mahindra Thar,2020,15000,Diesel,Hyderabad,1,SUV,Manual,Mahindra,Base,1400000,1120000
