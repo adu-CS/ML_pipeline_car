@@ -8,6 +8,7 @@ from sklearn.preprocessing import OrdinalEncoder
 from sklearn.metrics import mean_squared_error
 from xgboost import XGBRegressor
 import os
+import glob
 
 def clean_original_price(df):
     # Convert empty strings or spaces to NaN
@@ -21,10 +22,31 @@ def clean_original_price(df):
     df["original_price"] = df["original_price"].fillna(df["original_price"].median())
     return df
 
+def load_and_merge_csvs():
+    csv_files = glob.glob("*.csv")
+    print(f"📂 Found CSV files: {csv_files}")
 
-def main(data_path):
-    print(f"📂 Loading data from: {data_path}")
-    df = pd.read_csv(data_path)
+    if not csv_files:
+        raise FileNotFoundError("❌ No CSV files found in repository!")
+
+    dfs = []
+    for f in csv_files:
+        try:
+            df = pd.read_csv(f)
+            print(f"✅ Loaded {f} with {len(df)} rows.")
+            dfs.append(df)
+        except Exception as e:
+            print(f"⚠️ Skipping {f} due to error: {e}")
+
+    merged_df = pd.concat(dfs, ignore_index=True)
+    merged_df.drop_duplicates(inplace=True)
+    print(f"📊 Combined dataset has {len(merged_df)} rows after merging.")
+    return merged_df
+
+def main():
+    print("🚀 Starting training pipeline...")
+
+    df = load_and_merge_csvs()
 
     # Columns to use
     features = ["car_name", "yr_mfr", "kms_run", "fuel_type", "city", 
@@ -32,9 +54,10 @@ def main(data_path):
                 "make", "model", "original_price"]
     target = "sale_price"
 
-    df = df[features + [target]]
+    # Keep only required columns
+    df = df[[c for c in features + [target] if c in df.columns]]
 
-    # Clean original_price
+    # Clean price column
     df = clean_original_price(df)
 
     # Handle missing general values
@@ -74,7 +97,7 @@ def main(data_path):
         random_state=42
     )
 
-    print("🚀 Training model...")
+    print("🧠 Training model...")
     model.fit(X_train, y_train_log)
 
     # Predict
@@ -92,7 +115,4 @@ def main(data_path):
     print("💾 Model and encoder saved to /artifacts")
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--data", type=str, default="train.csv", help="Path to dataset CSV")
-    args = parser.parse_args()
-    main(args.data)
+    main()
